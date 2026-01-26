@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import HomePage from './setup/companyInfo/homePage';
+import AddCompanyInfo from './setup/companyInfo/addCompanyInfo';
+import ViewCompanyInfo from './setup/companyInfo/viewCompanyInfo';
+import ItemType from './setup/itemType/itemType';
+import UOfM from './setup/unitOfMe/uOfM';
+import CreateItemMaster from './setup/itemMaster/createItemMaster';
+import ViewCreateItemMaster from './setup/itemMaster/viewCreateItemMaster';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/add-company-info" element={<AddCompanyInfo />} />
+          <Route path="/view-company-info" element={<ViewCompanyInfo />} />
+          <Route path="/item-type" element={<ItemType />} />
+          <Route path="/uofm" element={<UOfM />} />
+          <Route path="/create-item-master" element={<CreateItemMaster />} />
+          <Route path="/view-create-item-master" element={<ViewCreateItemMaster />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
