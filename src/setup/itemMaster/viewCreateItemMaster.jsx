@@ -19,6 +19,8 @@ const ViewCreateItemMaster = () => {
         setItemTypes(getItemTypes);
         const getUnitOfMs = JSON.parse(localStorage.getItem("unitOfMeasurements")) || [];
         setUnitOfMs(getUnitOfMs);
+
+        console.log(getItemMaster);
     }, []);
 
     const getCompanyInfoById = (companyInfoId) => {

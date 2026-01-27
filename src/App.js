@@ -8,6 +8,7 @@ import UOfM from './setup/unitOfMe/uOfM';
 import CreateItemMaster from './setup/itemMaster/createItemMaster';
 import ViewCreateItemMaster from './setup/itemMaster/viewCreateItemMaster';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import IndentForPurchase from './setup/po&stock/indent';
 function App() {
   return (
     <div>
@@ -20,6 +21,7 @@ function App() {
           <Route path="/uofm" element={<UOfM />} />
           <Route path="/create-item-master" element={<CreateItemMaster />} />
           <Route path="/view-create-item-master" element={<ViewCreateItemMaster />} />
+          <Route path="/indent-for-purchase" element={<IndentForPurchase />} />
         </Routes>
       </Router>
     </div>

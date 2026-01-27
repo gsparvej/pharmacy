@@ -5,6 +5,7 @@ const ViewCompanyInfo = () => {
 
     useEffect(() => {
         const fetchCompanys = JSON.parse(localStorage.getItem("companyInfo")) || [];
+        console.log(fetchCompanys);
         setCompanyInfo(fetchCompanys);
     }, [])
 
