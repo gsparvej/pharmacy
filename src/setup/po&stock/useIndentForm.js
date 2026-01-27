@@ -27,7 +27,6 @@ export const useIndentForm = () => {
     useEffect(() => {
         setItemMasters(getItemMasters());
         setCompanyInfos(getCompanyInfos());
-        setItemTypes(getItemTypes());
     }, []);
 
     const handleChange = (e) => {
