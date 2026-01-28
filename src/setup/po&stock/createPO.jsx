@@ -47,6 +47,20 @@ const CreatePO = () => {
         const newPO = { ...createPO, id: Date.now() };
         existingPO.push(newPO);
         localStorage.setItem("createPO", JSON.stringify(existingPO));
+
+
+        const updatedIndents = indentForPurchase.map((indent) => {
+            if (String(indent.companyInfoId) === String(createPO.companyInfoId)) {
+                return {
+                    ...indent,
+                    status: "ORDERED"
+                };
+            }
+            return indent;
+        });
+        localStorage.setItem("indentForPurchase", JSON.stringify(updatedIndents));
+
+
         alert("PO Created Successfully");
         console.log(createPO);
         setCreatePO({
