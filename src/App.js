@@ -9,6 +9,7 @@ import CreateItemMaster from './setup/itemMaster/createItemMaster';
 import ViewCreateItemMaster from './setup/itemMaster/viewCreateItemMaster';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import IndentForPurchase from './setup/po&stock/indent';
+import CreatePO from './setup/po&stock/createPO';
 import ViewIndentForPurchase from './setup/po&stock/viewIndent';
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/view-create-item-master" element={<ViewCreateItemMaster />} />
           <Route path="/indent-for-purchase" element={<IndentForPurchase />} />
           <Route path="/view-indent-for-purchase" element={<ViewIndentForPurchase />} />
+          <Route path="/create-po" element={<CreatePO />} />
         </Routes>
       </Router>
     </div>

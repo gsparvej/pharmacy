@@ -49,6 +49,16 @@ const HomePage = () => {
                             <Link to="/view-indent-for-purchase">View Indent For Purchase</Link>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <div>Create PO</div>
+                            <Link to="/create-po">Create PO</Link>
+                        </td>
+                        <td>
+                            <div>View PO</div>
+                            <Link to="/view-po">View PO</Link>
+                        </td>
+                    </tr>
 
                 </tbody>
             </table>
