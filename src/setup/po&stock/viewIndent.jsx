@@ -16,7 +16,6 @@ const ViewIndentForPurchase = () => {
         setItemMaster(getItemMaster);
         const getUnitOfM = JSON.parse(localStorage.getItem("unitOfMeasurements")) || [];
         setUnitOfM(getUnitOfM);
-        console.log(getIndent);
     }, []);
 
     const getCompanyInfoById = (companyInfoId) => {

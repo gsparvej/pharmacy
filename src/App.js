@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import IndentForPurchase from './setup/po&stock/indent';
 import CreatePO from './setup/po&stock/createPO';
 import ViewIndentForPurchase from './setup/po&stock/viewIndent';
+import ViewPO from './setup/po&stock/viewPO';
 function App() {
   return (
     <div>
@@ -26,6 +27,7 @@ function App() {
           <Route path="/indent-for-purchase" element={<IndentForPurchase />} />
           <Route path="/view-indent-for-purchase" element={<ViewIndentForPurchase />} />
           <Route path="/create-po" element={<CreatePO />} />
+          <Route path="/view-po" element={<ViewPO />} />
         </Routes>
       </Router>
     </div>
