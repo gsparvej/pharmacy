@@ -27,14 +27,6 @@ const CreatePO = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        if (name === "companyInfoId") {
-            setCreatePO((prev) => ({
-                ...prev,
-                companyInfoId: value,
-                indentForPurchaseId: "", // Reset indent
-            }));
-            return;
-        }
         setCreatePO((prev) => ({
             ...prev,
             [name]: value
@@ -49,16 +41,18 @@ const CreatePO = () => {
         localStorage.setItem("createPO", JSON.stringify(existingPO));
 
 
-        const updatedIndents = indentForPurchase.map((indent) => {
-            if (String(indent.companyInfoId) === String(createPO.companyInfoId)) {
-                return {
-                    ...indent,
-                    status: "ORDERED"
-                };
+        const updatedIndents = indentForPurchase.map(indent => {
+            if (
+                String(indent.companyInfoId) === String(createPO.companyInfoId) &&
+                indent.status === "Indent"
+            ) {
+                return { ...indent, status: "ORDERED" };
             }
             return indent;
         });
+
         localStorage.setItem("indentForPurchase", JSON.stringify(updatedIndents));
+        setIndentForPurchase(updatedIndents);
 
 
         alert("PO Created Successfully");
@@ -71,14 +65,33 @@ const CreatePO = () => {
         });
     };
 
-    const filteredCompany = createPO.companyInfoId
-        ? indentForPurchase.filter((indent) => String(indent.companyInfoId) === String(createPO.companyInfoId))
-        : [];
-
     const getItemName = (itemMasterId) => {
         const item = itemMaster.find(item => String(item.id) === String(itemMasterId));
         return item ? item.productName : "-";
     };
+
+
+    // only INDENT status company
+    const indentCompanyIds = indentForPurchase
+        .filter(indent => indent.status === "Indent")
+        .map(indent => String(indent.companyInfoId));
+
+    const uniqueCompanyIds = [...new Set(indentCompanyIds)];
+
+    const filteredCompanies = companyInfo.filter(company =>
+        uniqueCompanyIds.includes(String(company.id))
+    );
+    const filteredIndents = createPO.companyInfoId
+        ? indentForPurchase.filter(
+            indent =>
+                String(indent.companyInfoId) === String(createPO.companyInfoId) &&
+                indent.status === "Indent"
+        )
+        : [];
+
+
+
+
 
 
 
@@ -95,7 +108,7 @@ const CreatePO = () => {
                         onChange={handleChange}
                     >
                         <option value="">Select Company / Vendor</option>
-                        {companyInfo.map((company) => (
+                        {filteredCompanies.map((company) => (
                             <option key={company.id} value={company.id}>
                                 {company.label}
                             </option>
@@ -111,7 +124,7 @@ const CreatePO = () => {
                 {createPO.companyInfoId && (
                     <div>
                         <h3>Indent List</h3>
-                        {filteredCompany.length === 0 ? (
+                        {filteredIndents.length === 0 ? (
                             <p>No indent found for this company</p>
                         ) : (
                             <table border="1" width="50%">
@@ -124,7 +137,7 @@ const CreatePO = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredCompany.map(indent => (
+                                    {filteredIndents.map(indent => (
                                         <tr key={indent.id}>
                                             <td>{indent.id}</td>
                                             <td>{getItemName(indent.itemMasterId)}</td>
