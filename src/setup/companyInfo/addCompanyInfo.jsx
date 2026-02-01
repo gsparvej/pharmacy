@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import axios from "axios";
 const AddCompanyInfo = () => {
     const [companyInfo, setCompanyInfo] = useState({
         label: "",
@@ -13,14 +13,10 @@ const AddCompanyInfo = () => {
             [e.target.name]: e.target.value,
         });
     };
-    const handelSubmit = (e) => {
+    const handelSubmit = async (e) => {
         e.preventDefault();
-        const existingCompanyInfo = JSON.parse(localStorage.getItem("companyInfo")) || [];
-        const newCompanyInfo = { ...companyInfo, id: Date.now() }
-        existingCompanyInfo.push(newCompanyInfo);
-        localStorage.setItem("companyInfo", JSON.stringify(existingCompanyInfo));
-        alert("Company Info Added Successfully");
-        console.log(companyInfo);
+        const res = await axios.post("http://localhost:5000/company", companyInfo);
+        console.log(res.data);
     };
 
     return (
