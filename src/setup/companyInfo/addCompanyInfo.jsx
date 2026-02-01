@@ -1,5 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
+import { addCompany } from "../apiService/company/companyService";
+
+
 const AddCompanyInfo = () => {
     const [companyInfo, setCompanyInfo] = useState({
         label: "",
@@ -15,8 +18,8 @@ const AddCompanyInfo = () => {
     };
     const handelSubmit = async (e) => {
         e.preventDefault();
-        const res = await axios.post("http://localhost:5000/company", companyInfo);
-        console.log(res.data);
+        const res = await addCompany(companyInfo);
+        console.log(res);
     };
 
     return (

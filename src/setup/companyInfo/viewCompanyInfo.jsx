@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { getAllCompany } from "../apiService/company/companyService";
 const ViewCompanyInfo = () => {
 
     const [companyInfo, setCompanyInfo] = useState([]);
 
+
     useEffect(() => {
-        const fetchCompanys = JSON.parse(localStorage.getItem("companyInfo")) || [];
-        console.log(fetchCompanys);
-        setCompanyInfo(fetchCompanys);
-    }, [])
+        const fetchCompanies = async () => {
+            try {
+                const res = await getAllCompany();
+                setCompanyInfo(res);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchCompanies();
+    }, []);
 
     return (
         <div>
