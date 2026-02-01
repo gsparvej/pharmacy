@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import { addItemType, getAllItemType } from "../apiService/type/itemTypeService";
+
+
+
 
 const ItemType = () => {
 
@@ -9,19 +13,28 @@ const ItemType = () => {
 
     const [itemTypes, setItemTypes] = useState([]);
 
-    useEffect(() => {
-        const fetchItemTypes = JSON.parse(localStorage.getItem("itemTypes")) || [];
-        setItemTypes(fetchItemTypes);
-    }, [])
-    const handleAddItemType = (e) => {
-        e.preventDefault();
-        const existingItemTypes = JSON.parse(localStorage.getItem("itemTypes")) || [];
+    const fetchItemTypes = async () => {
+        try {
+            const res = await getAllItemType();
+            setItemTypes(res);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
-        const newItemTypes = { ...itemType, id: Date.now() };
-        existingItemTypes.push(newItemTypes);
-        localStorage.setItem("itemTypes", JSON.stringify(existingItemTypes));
-        setItemTypes(existingItemTypes);
+    useEffect(() => {
+        fetchItemTypes();
+    }, [itemTypes]);
+
+
+
+    const handleAddItemType = async (e) => {
+        e.preventDefault();
+
+        const res = await addItemType(itemType);
+        console.log(res);
         setItemType({ itemTypeName: "" });
+        fetchItemTypes();
     };
 
 
