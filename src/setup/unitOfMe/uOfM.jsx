@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { addUnitOfM, getAllUnitOfM } from "../apiService/unit/unitOfMservice";
 
 const UOfM = () => {
     const [unitOfMeasurement, setUnitOfMeasurement] = useState({
@@ -8,20 +9,27 @@ const UOfM = () => {
     const [unitOfMeasurements, setUnitOfMeasurements] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
-    useEffect(() => {
-        const fetchUnitOfMeasurements = JSON.parse(localStorage.getItem("unitOfMeasurements")) || [];
-        setUnitOfMeasurements(fetchUnitOfMeasurements);
-    }, [])
+    const fetchUnitOfMeasurements = async () => {
+        try {
+            const res = await getAllUnitOfM();
+            setUnitOfMeasurements(res);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
-    const handleAddUnitOfMeasurement = (e) => {
+    useEffect(() => {
+        fetchUnitOfMeasurements();
+    }, [unitOfMeasurements])
+
+
+    const handleAddUnitOfMeasurement = async (e) => {
         e.preventDefault();
-        const existingUnitOfMeasurements = JSON.parse(localStorage.getItem("unitOfMeasurements")) || [];
-        const newUnitOfMeasurements = { ...unitOfMeasurement, id: Date.now() }
-        existingUnitOfMeasurements.push(newUnitOfMeasurements);
-        localStorage.setItem("unitOfMeasurements", JSON.stringify(existingUnitOfMeasurements));
-        setUnitOfMeasurements(existingUnitOfMeasurements);
+        const res = await addUnitOfM(unitOfMeasurement);
+        setUnitOfMeasurements(res);
         setUnitOfMeasurement({ unitOfMeasurementName: "" });
         setShowModal(false);
+        fetchUnitOfMeasurements();
     };
 
     return (
