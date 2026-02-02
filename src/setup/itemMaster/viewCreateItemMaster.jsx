@@ -1,5 +1,9 @@
 
 import { useEffect, useState } from "react";
+import { getAllItemMaster } from "../apiService/itemMaster/itemMasterService";
+import { getAllCompany } from "../apiService/company/companyService";
+import { getAllItemType } from "../apiService/type/itemTypeService";
+import { getAllUnitOfM } from "../apiService/unit/unitOfMservice";
 
 const ViewCreateItemMaster = () => {
 
@@ -10,17 +14,47 @@ const ViewCreateItemMaster = () => {
     const [search, setSearch] = useState(null);
 
 
-    useEffect(() => {
-        const getItemMaster = JSON.parse(localStorage.getItem("itemMaster")) || [];
-        setItemMaster(getItemMaster);
-        const getCompanyInfos = JSON.parse(localStorage.getItem("companyInfo")) || [];
-        setCompanyInfos(getCompanyInfos);
-        const getItemTypes = JSON.parse(localStorage.getItem("itemTypes")) || [];
-        setItemTypes(getItemTypes);
-        const getUnitOfMs = JSON.parse(localStorage.getItem("unitOfMeasurements")) || [];
-        setUnitOfMs(getUnitOfMs);
+    const getAllCompanyInfos = async () => {
+        try {
+            const res = await getAllCompany();
+            setCompanyInfos(res);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    const getAllItemTypes = async () => {
+        try {
+            const res = await getAllItemType();
+            setItemTypes(res);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    const getAllUnitOfMs = async () => {
+        try {
+            const res = await getAllUnitOfM();
+            setUnitOfMs(res);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
-        console.log(getItemMaster);
+
+
+    useEffect(() => {
+        const getItemMaster = async () => {
+            try {
+                const res = await getAllItemMaster();
+                setItemMaster(res);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        getItemMaster();
+        getAllCompanyInfos();
+        getAllItemTypes();
+        getAllUnitOfMs();
+
     }, []);
 
     const getCompanyInfoById = (companyInfoId) => {
