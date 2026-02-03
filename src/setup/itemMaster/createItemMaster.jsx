@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { getAllCompany } from "../apiService/company/companyService";
+import { getAllItemType } from "../apiService/type/itemTypeService";
+import { getAllUnitOfM } from "../apiService/unit/unitOfMservice";
+import { saveItemMaster } from "../apiService/itemMaster/itemMasterService";
 
 const CreateItemMaster = () => {
 
@@ -16,13 +20,53 @@ const CreateItemMaster = () => {
     const [itemTypes, setItemTypes] = useState([]);
     const [unitOfMs, setUnitOfMs] = useState([]);
 
+
+
+
+    const getAllCompanyInfos = async () => {
+        try {
+            const res = await getAllCompany();
+            setCompanyInfos(res);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    const getAllItemTypes = async () => {
+        try {
+            const res = await getAllItemType();
+            setItemTypes(res);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    const getAllUnitOfMs = async () => {
+        try {
+            const res = await getAllUnitOfM();
+            setUnitOfMs(res);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    const resetForm = () => {
+        setItemMaster({
+            companyInfoId: "",
+            itemTypeId: "",
+            unitOfMId: "",
+            productName: "",
+            genericName: "",
+            roomNo: "",
+        });
+    };
+
+
+
+
+
+
     useEffect(() => {
-        const getCompanyInfos = JSON.parse(localStorage.getItem("companyInfo")) || [];
-        setCompanyInfos(getCompanyInfos);
-        const getItemTypes = JSON.parse(localStorage.getItem("itemTypes")) || [];
-        setItemTypes(getItemTypes);
-        const getUnitOfMs = JSON.parse(localStorage.getItem("unitOfMeasurements")) || [];
-        setUnitOfMs(getUnitOfMs);
+        getAllCompanyInfos();
+        getAllItemTypes();
+        getAllUnitOfMs();
     }, []);
 
     const handleChange = (e) => {
@@ -32,14 +76,35 @@ const CreateItemMaster = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const existingItemMaster = JSON.parse(localStorage.getItem("itemMaster")) || [];
-        const newItemMaster = { ...itemMaster, id: Date.now() }
-        existingItemMaster.push(newItemMaster);
-        localStorage.setItem("itemMaster", JSON.stringify(existingItemMaster));
+
+
+        const payload = {
+            company: { id: itemMaster.companyInfoId },
+            itemName: { id: itemMaster.itemTypeId },
+            unitOfM: { id: itemMaster.unitOfMId },
+            productName: itemMaster.productName,
+            genericName: itemMaster.genericName,
+            roomNo: itemMaster.roomNo
+        };
+
+
+
+        const res = await saveItemMaster(payload);
+        console.log(res);
+
+
+
+
+        // const existingItemMaster = JSON.parse(localStorage.getItem("itemMaster")) || [];
+        // const newItemMaster = { ...itemMaster, id: Date.now() }
+        // existingItemMaster.push(newItemMaster);
+        // localStorage.setItem("itemMaster", JSON.stringify(existingItemMaster));
+
         alert("Item Master Added Successfully");
-        console.log(itemMaster);
+        resetForm();
+
     };
 
 
