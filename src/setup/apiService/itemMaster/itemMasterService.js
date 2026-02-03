@@ -10,3 +10,12 @@ export const getAllItemMaster = async () => {
     }
 };
 
+export const saveItemMaster = async (itemMaster) => {
+    try {
+        const res = await axios.post("http://localhost:5000/api/itemMaster/add", itemMaster);
+        return res.data;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
