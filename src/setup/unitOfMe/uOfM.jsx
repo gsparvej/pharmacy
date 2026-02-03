@@ -20,13 +20,13 @@ const UOfM = () => {
 
     useEffect(() => {
         fetchUnitOfMeasurements();
-    }, [unitOfMeasurements])
+    }, [])
 
 
     const handleAddUnitOfMeasurement = async (e) => {
         e.preventDefault();
-        const res = await addUnitOfM(unitOfMeasurement);
-        setUnitOfMeasurements(res);
+        await addUnitOfM(unitOfMeasurement);
+        // setUnitOfMeasurements(res); // REMOVED: broken, res is not an array
         setUnitOfMeasurement({ unitOfMeasurementName: "" });
         setShowModal(false);
         fetchUnitOfMeasurements();
@@ -80,7 +80,7 @@ const UOfM = () => {
                 <tbody>
                     {unitOfMeasurements.length > 0 ? (
                         unitOfMeasurements.map((item, index) => (
-                            <tr key={index}>
+                            <tr key={item.id}>
                                 <td>{index + 1}</td>
                                 <td>{item.unitOfMeasurementName}</td>
                             </tr>

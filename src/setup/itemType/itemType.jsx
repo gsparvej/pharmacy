@@ -24,7 +24,7 @@ const ItemType = () => {
 
     useEffect(() => {
         fetchItemTypes();
-    }, [itemTypes]);
+    }, []);
 
 
 
